@@ -1,14 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Full static export — no SSR, all Firebase runs client-side only
+  // Perfect for Cloudflare Pages static hosting
+  output: 'export',
+  trailingSlash: true,
   images: {
-    domains: ['i.ibb.co', 'ibb.co', 'images.unsplash.com'],
-    unoptimized: true,
+    unoptimized: true, // Required for static export
   },
-  // For Cloudflare Pages deployment
-  // When deploying with @cloudflare/next-on-pages, uncomment:
-  // experimental: {
-  //   runtime: 'edge',
-  // },
 };
 
 module.exports = nextConfig;
