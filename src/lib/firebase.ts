@@ -2,22 +2,22 @@ import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
 import { getFirestore, type Firestore } from 'firebase/firestore';
 import { getAuth, type Auth } from 'firebase/auth';
 
+// Config hardcoded — these are public client-side keys (safe to commit)
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+  apiKey: "AIzaSyA0NNXzbi6NpctcPudTUswms6HkqBV_uQo",
+  authDomain: "niklaus-9c2b6.firebaseapp.com",
+  projectId: "niklaus-9c2b6",
+  storageBucket: "niklaus-9c2b6.firebasestorage.app",
+  messagingSenderId: "608119762863",
+  appId: "1:608119762863:web:8d022ec10741e9d0b8895a",
+  measurementId: "G-CH1ZFCXDDF",
 };
 
-// Lazy singletons — only initialized when actually called (client-side)
 let _app: FirebaseApp | null = null;
 let _db: Firestore | null = null;
 let _auth: Auth | null = null;
 
-function getFirebaseApp(): FirebaseApp {
+function getApp_(): FirebaseApp {
   if (!_app) {
     _app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
   }
@@ -25,26 +25,13 @@ function getFirebaseApp(): FirebaseApp {
 }
 
 export function getDb(): Firestore {
-  if (!_db) _db = getFirestore(getFirebaseApp());
+  if (typeof window === 'undefined') throw new Error('Firestore must be used client-side only');
+  if (!_db) _db = getFirestore(getApp_());
   return _db;
 }
 
 export function getFirebaseAuth(): Auth {
-  if (!_auth) _auth = getAuth(getFirebaseApp());
+  if (typeof window === 'undefined') throw new Error('Auth must be used client-side only');
+  if (!_auth) _auth = getAuth(getApp_());
   return _auth;
 }
-
-// Keep named exports for backwards compatibility
-export const db = new Proxy({} as Firestore, {
-  get(_, prop) {
-    return (getDb() as any)[prop];
-  },
-});
-
-export const auth = new Proxy({} as Auth, {
-  get(_, prop) {
-    return (getFirebaseAuth() as any)[prop];
-  },
-});
-
-export default { get app() { return getFirebaseApp(); } };
