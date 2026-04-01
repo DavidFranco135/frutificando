@@ -35,3 +35,27 @@ export function getFirebaseAuth(): Auth {
   if (!_auth) _auth = getAuth(getApp_());
   return _auth;
 }
+
+
+// Default content fallback used when Firestore is unavailable
+export const DEFAULT_CONTEUDO_FALLBACK = {
+  hero_titulo: 'FRUTIFICANDO',
+  hero_subtitulo: 'Um final de semana de comunhão, descanso e crescimento espiritual em meio à natureza.',
+  sobre_titulo: 'UM MOMENTO DE RENOVAÇÃO',
+  sobre_texto: 'O Frutificando é um encontro especial para comunhão, crescimento espiritual e descanso em meio à natureza.',
+  programacao_itens: [
+    { id: '1', dia: 'Sexta-feira (22/05)', hora: '16:00 - 17:00', titulo: 'Entrada', descricao: 'Check-in e acomodação nos quartos.', icone: 'LogIn' },
+    { id: '2', dia: 'Sexta-feira (22/05)', hora: '20:00', titulo: 'Jantar', descricao: 'Momento de comunhão e refeição.', icone: 'Utensils' },
+    { id: '3', dia: 'Sábado (23/05)', hora: '07:00 - 08:30', titulo: 'Café da Manhã', descricao: 'Início do dia com energia.', icone: 'Coffee' },
+    { id: '4', dia: 'Sábado (23/05)', hora: '12:00', titulo: 'Almoço', descricao: 'Refeição principal do dia.', icone: 'Utensils' },
+  ],
+  valor_parcelado: 26.70,
+  valor_parcelas: 7,
+  valor_avista: 186.90,
+  valor_descricao: 'Inclui hospedagem, 3 refeições e todas as atividades.',
+  whatsapp_numero: '5511999999999',
+  link_inscricao_evento: '',
+  data_evento_inicio: '22/05/2026',
+  data_evento_fim: '24/05/2026',
+  local_evento: 'Sítio em Mairiporã - SP',
+};
